@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
 
 function App() {
+    const [wordSize, setWordSize] = useState(+(localStorage.getItem('wordSize') || '5'));
+    const [word, setWord] = useState(localStorage.getItem('currentWord'));
+
+    const decreaseWordSize = () => {
+        if (wordSize <= 5) return;
+        const newWordSize = wordSize - 1;
+        setWordSize(newWordSize);
+        localStorage.setItem('wordSize', `${newWordSize}`);
+    }
+
+    const increaseWordSize = () => {
+        const newWordSize = wordSize + 1;
+        setWordSize(newWordSize);
+        localStorage.setItem('wordSize', `${newWordSize}`);
+    }
+
+    const nextWord = () => {
+
+    }
+
     return (
         <OutsideGrid>
             <div style={{ gridColumn: 1, gridRow: 1 }} />
@@ -22,7 +42,17 @@ function App() {
                         alignItems='center'
                         bg='yellow'
                     >
-                        <p>Increase word size</p>
+                        <button onClick={decreaseWordSize}>
+                            -1
+                        </button>
+                        <p style={{ margin: '0 12px' }}>
+                            <b>
+                                {wordSize}
+                            </b>
+                        </p>
+                        <button onClick={increaseWordSize}>
+                            +1
+                        </button>
                     </Flex>
                     <h1 style={{ fontSize: '3rem', margin: 0 }}>
                         Lingo
@@ -32,7 +62,9 @@ function App() {
                         alignItems='center'
                         bg='red'
                     >
-                        <p>Next word</p>
+                        <button onClick={nextWord}>
+                            Next word
+                        </button>
                     </Flex>
                 </div>
             </div>
