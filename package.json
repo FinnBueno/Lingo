@@ -44,11 +44,7 @@
       "react/jsx-one-expression-per-line": "off",
       "comma-dangle": "off",
       "indent": [
-        "error",
-        "space",
-        {
-          "SwitchCase": 1
-        }
+        "off"
       ],
       "jsdoc/require-param": "off",
       "no-unused-vars": [
