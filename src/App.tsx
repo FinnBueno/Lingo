@@ -7,6 +7,10 @@ function App() {
     const [wordSize, setWordSize] = useState(+(localStorage.getItem('wordSize') || '5'));
 
     useEffect(() => {
+        console.log('Version 1.1');
+    }, []);
+
+    useEffect(() => {
         setWord(newWord());
     }, [wordSize]);
 
@@ -45,7 +49,7 @@ function App() {
 
     const guess = () => {
         if (guesses.length >= 5) return;
-        const guessValue: string = (document.getElementById('guessField')as any).value;
+        const guessValue: string = (document.getElementById('guessField') as any).value;
         if (!guessValue) return;
         setGuesses([
             ...(guesses || []),
@@ -55,16 +59,18 @@ function App() {
 
     const calculateColor = (rowNr: number, colNr: number) => {
         if (colNr == 0) return '#d46934';
-        if (guesses[rowNr][colNr] === word[colNr]) {
+        const currentGuess = guesses[rowNr];
+        if (currentGuess[colNr] === word[colNr]) {
             return '#d46934';
         }
+        // left in correct word
         const left = [...word];
         for (let i = 0; i < word.length; i++) {
-            if (left[i] == guesses[rowNr][i]) {
+            if (left[i] == currentGuess.toLowerCase()[i]) {
                 left[i] = '.';
             }
         }
-        return word.includes(guesses[rowNr][colNr]) ? '#d4a934' : '#2593c0';
+        return left.includes(currentGuess[colNr]) ? '#d4a934' : '#2593c0';
     }
 
     return (
@@ -125,7 +131,7 @@ function App() {
                     gridTemplateColumns: `repeat(${wordSize}, 1fr)`,
                     gridTemplateRows: `repeat(${7}, 2fr) 1fr`
                 }}>
-                    {[...Array(7).keys()].map(rowNr => 
+                    {[...Array(7).keys()].map(rowNr =>
                         [...Array(wordSize).keys()].map(colNr => rowNr !== 5 ? (
                             <Cell
                                 key={rowNr + '-' + colNr}
