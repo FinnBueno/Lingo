@@ -7,7 +7,7 @@ function App() {
     const [wordSize, setWordSize] = useState(+(localStorage.getItem('wordSize') || '5'));
 
     useEffect(() => {
-        console.log('Version 1.1');
+        console.log('Version 1.3');
     }, []);
 
     useEffect(() => {
